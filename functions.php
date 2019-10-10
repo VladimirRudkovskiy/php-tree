@@ -20,4 +20,24 @@ function createTreeView($parent, $menu) {
    }
    return $html;
 }
+
+function doCreateNode($id, $label, $link, $parent, $sort) 
+{
+	if ($parent=="treeview.root") $parent="root";
+	mysqli_query($conn, "INSERT INTO menus VALUES ('$id', '$label', '$link', '$parent',false, '$sort')");
+	return 1;
+}
+
 ?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<body>
+		<form action="index.php" method="post">
+			<input type="submit" name="insert" value="Add" onClick="doCreateNode()">
+			<input type="submit" name="delete" value="Delete">
+		</form>
+		</body>
+	</head>
+</html>
