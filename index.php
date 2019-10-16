@@ -22,7 +22,6 @@
 $(document).ready(function(){ 
     //fill data to tree  with AJAX call
     $('#tree-container').jstree({
-	'plugins': ["checkbox"],
         'core' : {
             'data' : {
                 "url" : "db_connect.php",
