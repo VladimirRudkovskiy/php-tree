@@ -1,29 +1,34 @@
-<?php 
-include_once("db_connect.php");
-include_once("functions.php");
-?>
-<link rel="stylesheet" href="style.css" type="text/css" media="all">
-<div class="container">
-	<?php
-	$sql = "SELECT id, label, link, parent FROM menus ORDER BY parent, sort, label";
-	$result = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
+<?php
+//include("db_connect.php");
+?>  
 
-	// Create an array to conatin a list of items and parents
-	$menus = array(
-		'items' => array(),
-		'parents' => array()
-	);
-
-	// Builds the array lists with data from the SQL result
-	while ($items = mysqli_fetch_assoc($result)) {
-
-		// Create current menus item id into array
-		$menus['items'][$items['id']] = $items;
-
-		// Creates list of all items with children
-		$menus['parents'][$items['parent']][] = $items['id'];
-	}
-	// Print all tree view menus 
-	echo createTreeView(0, $menus);
-	?>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<link rel="stylesheet" href="dist/style.min.css" />
+<script src="dist/jstree.min.js"></script>
+<title></title>
+<script>
+</script>
+</head>
+<body>
+<div id="tree-container"></div>
+</body>
+</html>
+<script type="text/javascript">
+$(document).ready(function(){ 
+    //fill data to tree  with AJAX call
+    $('#tree-container').jstree({
+	'plugins': ["wholerow", "checkbox"],
+        'core' : {
+            'data' : {
+                "url" : "db_connect.php",
+                "dataType" : "json" // needed only if you do not supply JSON headers
+            }
+        }
+    }) 
+});
+</script>
